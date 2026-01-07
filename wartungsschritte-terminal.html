@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>wartungsschritte-terminal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#0b1117;
+  --panel:#0f1623;
+  --panel2:#0c1320;
+  --border:#1f2a3a;
+  --text:#e6edf3;
+  --muted:#9aa7b5;
+  --accent:#2f81f7;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 600px at 50% -200px,#16233a 0%,#0b1117 60%);
+  color:var(--text);
+}
+.wrap{
+  max-width:1200px;
+  margin:0 auto;
+  padding:48px;
+}
+.card{
+  background:linear-gradient(180deg,#0f1a2a,#0c1320);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:34px 34px 30px 34px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+.card + .card{ margin-top:28px; }
+
+.title{
+  font-size:30px;
+  font-weight:800;
+  margin:0 0 6px 0;
+}
+.note{
+  font-size:18px;
+  color:var(--muted);
+  margin:0 0 18px 0;
+}
+.row{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.cmd{
+  flex:1;
+  background:linear-gradient(180deg,#101a2a,#0b1320);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px 18px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:20px;
+  white-space:nowrap;
+  overflow:auto;
+}
+.btn{
+  border:1px solid var(--border);
+  background:linear-gradient(180deg,#172742,#122037);
+  color:var(--text);
+  padding:14px 20px;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  min-width:170px;
+}
+.btn:active{ background:linear-gradient(180deg,#1b2d4a,#142540); }
+.sub{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:16px;
+}
+.p{
+  margin-top:16px;
+  color:var(--text);
+  font-size:20px;
+  line-height:1.45;
+}
+.p.muted{ color:var(--muted); font-size:18px; }
+
+@media (max-width:900px){
+  .wrap{ padding:22px; }
+  .row{ flex-direction:column; align-items:stretch; }
+  .btn{ width:100%; min-width:0; }
+  .cmd{ font-size:18px; }
+}
+</style>
+<script>
+function copyText(id){
+  const txt = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(txt);
+}
+</script>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="card">
+      <div class="title">1. Spotlight-Index neu aufbauen</div>
+      <div class="note">Nur ausführen, wenn iCloud vollständig synchronisiert ist.</div>
+      <div class="row">
+        <div class="cmd" id="cmd1">sudo mdutil -E /</div>
+        <button class="btn" onclick="copyText('cmd1')">Befehl kopieren</button>
+      </div>
+      <div class="sub">Spotlight neu indizieren</div>
+      <div class="p muted">Dieser Befehl löscht und erneuert den Spotlight-Index. Während der Neuindizierung kann die Leistung vorübergehend sinken.</div>
+    </div>
+
+    <div class="card">
+      <div class="title">2. iCloud-Cache kontrolliert leeren</div>
+      <div class="note">Entfernt lokale Kopien ohne Cloud-Daten zu löschen.</div>
+      <div class="row">
+        <div class="cmd" id="cmd2">brctl evict ~/Library/Mobile\ Documents</div>
+        <button class="btn" onclick="copyText('cmd2')">Befehl kopieren</button>
+      </div>
+      <div class="sub">Lokale Metadaten bereinigen</div>
+      <div class="p muted">Erzwingt einen frischen Abgleich beim nächsten Online-Start.</div>
+
+      <div style="height:18px"></div>
+
+      <div class="title" style="font-size:24px;margin-top:0">Optional: Gesamten Cache entfernen</div>
+      <div class="note">Nur wenn iCloud deaktiviert ist. Danach System neu starten.</div>
+      <div class="row">
+        <div class="cmd" id="cmd3">rm -rf ~/Library/Application\ Support/CloudDocs</div>
+        <button class="btn" onclick="copyText('cmd3')">Befehl kopieren</button>
+      </div>
+      <div class="sub">Cache entfernen</div>
+    </div>
+
+  </div>
+</body>
+</html>
