@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>wartungsschritte-terminal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#0b1117;
+  --panel:#0f1623;
+  --panel-soft:#111a2a;
+  --border:#1f2a3a;
+  --text:#e6edf3;
+  --muted:#9aa7b5;
+  --accent:#2f81f7;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 600px at 50% -200px,#16233a 0%,#0b1117 60%);
+  color:var(--text);
+}
+.wrapper{
+  max-width:1200px;
+  margin:0 auto;
+  padding:48px;
+}
+.card{
+  background:linear-gradient(180deg,#0f1a2a,#0c1320);
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:36px;
+  box-shadow:0 30px 80px rgba(0,0,0,.45);
+}
+.card + .card{ margin-top:28px; }
+
+h1{
+  margin:0 0 24px 0;
+  font-size:42px;
+  font-weight:700;
+}
+h2{
+  margin:0 0 6px 0;
+  font-size:26px;
+  font-weight:700;
+}
+.note{
+  color:var(--muted);
+  font-size:18px;
+  margin-bottom:18px;
+}
+
+.code-row{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:linear-gradient(180deg,#0e1726,#0b1320);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px 18px;
+}
+.code{
+  flex:1;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:20px;
+  white-space:nowrap;
+}
+.copy{
+  border:1px solid var(--border);
+  background:#16233a;
+  color:var(--text);
+  padding:12px 18px;
+  border-radius:999px;
+  font-size:16px;
+  cursor:pointer;
+}
+.copy:active{
+  background:#1b2d4a;
+}
+
+.step{
+  margin-top:32px;
+}
+.step:first-of-type{ margin-top:0; }
+
+@media (max-width:760px){
+  .wrapper{ padding:22px; }
+  h1{ font-size:34px; }
+  h2{ font-size:22px; }
+  .code{ font-size:16px; }
+}
+</style>
+<script>
+function copyCmd(id){
+  navigator.clipboard.writeText(document.getElementById(id).innerText);
+}
+</script>
+</head>
+<body>
+  <div class="wrapper">
+
+    <h1>D. Wartungsschritte bei iCloud-Störungen</h1>
+
+    <div class="card step">
+      <h2>1. Spotlight-Index neu aufbauen</h2>
+      <div class="note">Nur ausführen, wenn iCloud vollständig synchronisiert ist.</div>
+      <div class="code-row">
+        <div class="code" id="cmd1">sudo mdutil -E /</div>
+        <button class="copy" onclick="copyCmd('cmd1')">Befehl kopieren</button>
+      </div>
+    </div>
+
+    <div class="card step">
+      <h2>2. iCloud-Cache kontrolliert leeren</h2>
+      <div class="note">Statuskontrolle und gezielte Bereinigung lokaler Metadaten.</div>
+      <div class="code-row">
+        <div class="code" id="cmd2">brctl evict ~/Library/Mobile\ Documents</div>
+        <button class="copy" onclick="copyCmd('cmd2')">Befehl kopieren</button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
